@@ -19,7 +19,7 @@ const App = () => {
 
   return (
     <div>
-      <h2>News By Alana</h2>
+      <h2>News By Alan</h2>
     </div>
   );
 }
