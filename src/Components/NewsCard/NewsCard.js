@@ -6,19 +6,19 @@ const NewsCard = ({ article: { description, publishedAt, source, title, url, url
     const classes = useStyles();
     
     return (
-        <Card>
-            <CardActionArea>
-                <CardMedia className={ classes.media } image={ urlToImage || 'https://e7.pngegg.com/pngimages/422/126/png-clipart-newspaper-computer-icons-symbol-news-icon-text-logo.png' } />
-                <div>
+        <Card className={classes.card}>
+            <CardActionArea href={url} target="_blank">
+                <CardMedia className={classes.media} image={urlToImage || 'https://e7.pngegg.com/pngimages/422/126/png-clipart-newspaper-computer-icons-symbol-news-icon-text-logo.png'} />
+                <div className={classes.details}>
                     <Typography variant="body2" color="textSecondary" component="h2">{(new Date(publishedAt)).toDateString()}</Typography>
                     <Typography variant="body2" color="textSecondary" component="h2">{source.name}</Typography>
                 </div> 
-                <Typography gutterBottom variant="h5">{title}</Typography>
+                <Typography className={classes.title} gutterBottom variant="h5">{title}</Typography>
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">{description}</Typography>
-                </CardContent>
+                </CardContent>   
             </CardActionArea>
-            <CardActions>
+            <CardActions className={classes.cardActions}>
                 <Button size="small" color="primary">Learn More</Button>
                 <Typography variant="h5" color="textSecondary">{ i + 1 }</Typography>
             </CardActions>
