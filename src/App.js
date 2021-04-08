@@ -20,7 +20,7 @@ const App = () => {
   }, [])
 
   return (
-    <div>
+    <div style={{textAlign: "center"}}>
       <h2>News By Alan</h2>
       <NewsCards articles = {newsArticles} />
     </div>
