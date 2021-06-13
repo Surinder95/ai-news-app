@@ -5,7 +5,8 @@ const API_KEY = '9fd0a9641f6a46889e829e5130573c52';
 let savedArticles = [];
 
 // News by Source
-intent('Give me the news from $(source* (.*))', (p) => {
+// let letters_reg = "(.*)";
+intent('Give me $(source* (.*)) news', (p) => {
     let NEWS_API_URL = `https://newsapi.org/v2/top-headlines?apiKey=${API_KEY}`;
     
     if(p.source.value) {
@@ -46,7 +47,7 @@ intent('what\'s new with $(term* (.*))', (p) => {
         savedArticles = articles;
         
         p.play({ command: 'newHeadlines', articles });
-        p.play(`Here's the (latest | most recent) articles on ${p.term.value}.`);
+        p.play(`Here's the (latest | most recent) articles on  ${p.term.value}.`);
     });
 })
 
@@ -56,10 +57,10 @@ const CATEGORIES_INTENT = `${CATEGORIES.map((category) => `${category}~${categor
 
 intent(`(show|what is|tell me|what's|what are|what're|read) (the|) (recent|latest|) $(N news|headlines) (in|about|on|) $(C~ ${CATEGORIES_INTENT})`,
   `(read|show|get|bring me|give me) (the|) (recent|latest) $(C~ ${CATEGORIES_INTENT}) $(N news|headlines)`, (p) => {
-    let NEWS_API_URL = `https://newsapi.org/v2/top-headlines?apiKey=${API_KEY}`;
+    let NEWS_API_URL = `https://newsapi.org/v2/top-headlines?apiKey=${API_KEY}&country=us`;
     
     if(p.C.value) {
-        NEWS_API_URL = `${NEWS_API_URL}&category=${p.C.value}`; 
+        NEWS_API_URL = `${NEWS_API_URL}&category=${p.C.value}`;
     }
     
     api.request(NEWS_API_URL, (error, response, body) => {
@@ -73,6 +74,12 @@ intent(`(show|what is|tell me|what's|what are|what're|read) (the|) (recent|lates
         savedArticles = articles;
         
         p.play({ command: 'newHeadlines', articles });
-        p.play(`Here's the (latest | most recent) articles on ${p.C.value}.`);
+        
+        if(p.C.value) {
+            p.play(`Here's the (latest | most recent) articles on ${p.C.value}.`);      
+        } else {
+            p.play(`Here's the (latest | recent) news`); 
+        }
+        
     });
 })
